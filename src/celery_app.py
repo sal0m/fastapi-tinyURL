@@ -4,8 +4,8 @@ from src.tasks.links import delete_unused_links
 
 celery_app = Celery(
     'tasks',
-    broker=os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379'),
-    backend=os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379')
+    broker=os.getenv('CELERY_BROKER_URL', 'redis://redis:5370'),
+    backend=os.getenv('CELERY_RESULT_BACKEND', 'redis://redis:5370')
 )
 
 celery_app.conf.broker_connection_retry_on_startup = True

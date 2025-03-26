@@ -5,8 +5,8 @@ from src.auth.schemas import UserCreate, UserRead, UserUpdate
 from src.auth.manager import auth_backend, current_active_user, fastapi_users
 import uvicorn
 from src.urls.router import router as links_router
-from src.urls.router import limiter
-from slowapi.middleware import SlowAPIMiddleware
+# from src.urls.router import limiter
+# from slowapi.middleware import SlowAPIMiddleware
 
 
 app = FastAPI()
@@ -37,8 +37,8 @@ app.include_router(
 )
 
 # Роутер для управления короткими ссылками
-app.add_middleware(SlowAPIMiddleware)
-app.state.limiter = limiter
+# app.add_middleware(SlowAPIMiddleware)
+# app.state.limiter = limiter
 app.include_router(links_router, prefix="/api", tags=["links"])
 
 

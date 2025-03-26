@@ -6,16 +6,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from src.auth.database import Link, Stats, User, get_async_session
 from src.auth.manager import current_active_user
-from src.redis import set_cache, get_cache, delete_cache
+from src.redis_utils import set_cache, get_cache, delete_cache
 from fastapi.responses import RedirectResponse
-from slowapi import Limiter
+# from slowapi import Limiter
 from slowapi.util import get_remote_address
 import qrcode
 from io import BytesIO
 from fastapi.responses import StreamingResponse
 
 router = APIRouter()
-limiter = Limiter(key_func=get_remote_address, storage_uri="redis://localhost:6379/1")  
+# limiter = Limiter(key_func=get_remote_address, storage_uri="redis://redis:6379/1")  
 
 MAX_ANONYMOUS_LINK_LIFETIME = timedelta(days=30)  # Максимальный срок жизни анонимной ссылки
 DEFAULT_ANONYMOUS_EXPIRATION = timedelta(days=7)   # Срок по умолчанию, если не указан
@@ -33,7 +33,7 @@ async def generate_unique_short_code(length: int = 10) -> str:
 
 # Создание короткой ссылки
 @router.post("/links/shorten")
-@limiter.limit("10/minute") #Не больше 10 запросов в минуту, защита от брутфорса и DDoS-атак
+# @limiter.limit("10/minute") #Не больше 10 запросов в минуту, защита от брутфорса и DDoS-атак
 async def shorten_link(
     request: Request,  
     original_url: str, 
@@ -58,7 +58,7 @@ async def shorten_link(
 
 # Создание короткой ссылки для незарегистрированных пользователей
 @router.post("/links/anonymous/shorten")
-@limiter.limit("5/minute")
+# @limiter.limit("5/minute")
 async def shorten_link_anonymous(
     request: Request,
     original_url: str,
