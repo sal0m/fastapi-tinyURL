@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import select, delete
 from src.auth.database import Link, Stats, get_async_session
 
-UNUSED_LINK_EXPIRE_DAYS = int(os.getenv('UNUSED_LINK_EXPIRE_DAYS', 30))
+UNUSED_LINK_EXPIRE_DAYS = int(os.getenv('UNUSED_LINK_EXPIRE_DAYS', 160))
 
 async def delete_unused_links():
     """Удаление ссылок, которые не использовались более N дней"""
