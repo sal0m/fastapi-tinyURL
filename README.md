@@ -68,7 +68,11 @@ pip install -r requirements.txt
 
 ### 3. Запуск сервера
 ```sh
-uvicorn main:app --reload
+docker-compose up --build -d
+```
+### 4. Проверка работы
+```sh
+docker logs fastapi_app -f
 ```
 
 ## 🗄️ Описание БД
@@ -117,3 +121,5 @@ uvicorn main:app --reload
 ![alt text](image-1.png)
 
 ![alt text](image-2.png)
+
+![alt text](image-3.png)
