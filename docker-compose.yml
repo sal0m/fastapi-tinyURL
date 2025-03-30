@@ -5,10 +5,8 @@ services:
     image: postgres:16
     container_name: db_app
     command: postgres -p 1221  
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tiny_url
+    env_file:
+      - .env
     ports:
       - "1221:1221"  #
     volumes:
@@ -31,14 +29,8 @@ services:
     depends_on:
       - db
       - redis
-    environment:
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DB_HOST=db
-      - DB_PORT=1221
-      - DB_NAME=tiny_url
-      - CELERY_BROKER_URL=redis://redis:5370/0
-      - CELERY_RESULT_BACKEND=redis://redis:5370/0
+    env_file:
+      - .env
 
   celery:
     build:
@@ -47,9 +39,8 @@ services:
     command: ["/fastapi_app/docker/celery.sh", "celery"]
     depends_on:
       - redis
-    environment:
-      - CELERY_BROKER_URL=redis://redis:5370/0
-      - CELERY_RESULT_BACKEND=redis://redis:5370/0
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
